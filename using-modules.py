@@ -14,6 +14,7 @@ harry = Animal('hippogriff', 6, 'pink')
 # Suppose we want a herd of these six legged pink hippogrifs. let's use the copy module
 # import copy
 
+from calendar import c
 import copy
 from tkinter import ANCHOR
 
@@ -143,3 +144,111 @@ sys.stdout.write('Go Go Power Rangers')
 # about window of your program:
 
 print(str(sys.version))
+
+# Time module. python's time module is odd. It sidplays the number of seconds since January 1, 1970 at 00:00:00 am.
+#  import time
+
+import time
+
+print(time.time())
+
+# Let's time our function to see how long it takes to count from 0 - 999
+
+def many_numbers(max):
+    t1 = time.time()
+    for x in range(0, max):
+        print(x)
+    t2 = time.time()
+    print('it took %s seconds' % (t2 - t1))
+
+many_numbers(1000)
+
+# asctime takes a date as a tuple and converts it into something more readable
+
+print(time.asctime())
+
+# asctime with a parameter
+
+time_example = ('year', 'month', 'day', 'hours', 'minutes', 'seconds', 'day of the week', 'day of the year', 'daylight savings time')
+
+t = (2020, 2, 23, 10, 30, 48, 6, 0, 0)
+print(time.asctime(t))
+
+# Getting date and time with localtime. unlike asctime, the function localtime returns the current date and time as an object with the values in roughly the same order. 
+
+print(time.localtime())
+
+# to print the current year and month, you can use their index positions.
+
+t= time.localtime()
+year = t[0]
+month = t[1]
+print(year)
+print(month)
+
+# Sleep function can be helpful for when you want to delay or slow down your program. 
+
+# for x in range(1, 61):
+#     print(x)
+#     time.sleep(1)
+
+# Use the pickle module to save information
+#  pickle is used to convert python objects into something that can be written into a file and then easily read back out. Useful if you're making a game and want to save your
+#  player's progress.
+
+import pickle
+
+game_data = {
+    'player-position' : 'N23 E45',
+    'pockets' : ['keys', 'pocket knife', 'polished stone'],
+    'backpack' : ['rope', 'hammer', 'apple'],
+    'money' : 158.50
+}
+save_file = open('d:\\code\\python-practice\\using-python-modules\\save.dat', 'wb')
+pickle.dump(game_data, save_file)
+save_file.close()
+
+#  pickled files aren't readable by humans. we can UNPICKLE them by using pickle's load function. this reverses the pickle process: takes the information written
+# in the file and converts it back into values that our program can use
+
+load_file = open('d:\\code\\python-practice\\using-python-modules\\save.dat', 'rb')
+loaded_game_data = pickle.load(load_file)
+load_file.close()
+
+print(loaded_game_data)
+
+####### More practice!
+
+import copy
+class Car:
+    pass
+
+car1 = Car()
+car1.wheels = 4
+
+car2 = car1
+car2.wheels = 3
+print(car1.wheels)
+
+car3 = copy.copy(car1)
+car3.wheels = 6
+print(car1.wheels)
+
+# car2 was not a copy of car1, it was car1. So, when we changed the number of wheels for car2, it changed car1
+# car3 is a shallow copy of car1. this means it shares all of the qualities of car1. when the number of wheels changed 
+# for car1, this was set in stone for car3, even though it's another object. can't change those values
+
+# create a list of your favorite things, and then use pickle to save them to a file called favorites.dat. Close the python shell, and then reopen it
+#  and display your list of favorites by loading the file
+
+favorite_foods = ['sushi', 'pizza', 'sherbet', 'lemon']
+
+saved_list = open('d:\\code\\python-practice\\using-python-modules\\saved_list.dat', 'wb')
+pickle.dump(favorite_foods, saved_list)
+saved_list.close()
+
+loaded_list = open('d:\\code\\python-practice\\using-python-modules\\saved_list.dat', 'rb')
+loaded_list_data = pickle.load(loaded_list)
+loaded_list.close()
+
+print(loaded_list_data)
